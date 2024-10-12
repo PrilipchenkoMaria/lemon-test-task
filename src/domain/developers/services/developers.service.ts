@@ -9,8 +9,8 @@ export class DevelopersService {
 		@inject('DevelopersRepository') private developersRepository: DevelopersRepository,
 	) {}
 
-	async getDevelopers(): Promise<IDeveloper[]>{
-		return this.developersRepository.getDevelopers()
+	async getDevelopers(includeRevenue: boolean): Promise<IDeveloper[]>{
+		return this.developersRepository.getDevelopers(includeRevenue)
 	}
 
 	async getDeveloperById(id: string){
