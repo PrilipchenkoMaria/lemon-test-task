@@ -10,6 +10,11 @@ export const getDevelopers: IApiOperationArgsBase = {
 	summary: "Get full list of developers (used by developers management dashboard and contracts management dashboard)",
 	path: '/',
 	parameters: {
+		query: {
+			revenue: {
+				required: false, name: 'revenue', type: 'boolean', description: 'Add revenue to the response when equal true'
+			}
+		},
 	},
 	responses: {
 		200: {

@@ -2,7 +2,9 @@ import {
 	interfaces,
 	controller,
 	BaseHttpController,
-	httpGet, requestParam
+	httpGet,
+	queryParam,
+	requestParam
 } from 'inversify-express-utils';
 import { ApiOperationGet, ApiPath } from 'swagger-express-ts';
 import {
@@ -22,8 +24,8 @@ export class DevelopersController extends BaseHttpController implements interfac
 
 	@httpGet('/')
 	@ApiOperationGet(getDevelopers)
-	public async getDevelopers(): Promise<DeveloperDto[]> {
-		return this.developersService.getDevelopers()
+	public async getDevelopers(@queryParam('revenue') revenue: string): Promise<DeveloperDto[]> {
+		return this.developersService.getDevelopers(revenue === 'true')
 	}
 
 	@httpGet('/:id')

@@ -5,19 +5,54 @@ import { DevelopersRepository } from '../src/domain/developers/repositories/deve
 
 describe('Developers API tests examples', () => {
 
-	it('should BAT fetch developers (e2e, real repository used)', async () => {
+	describe('e2e, real repository used', () => {
 
-		const result = await request.get(`/api/developers`)
+		it('should BAT fetch developers', async () => {
 
-		expect(result.status).toBe(200)
-		expect(result.body?.length).toBeGreaterThan(0)
+			const result = await request.get(`/api/developers`)
 
-		for( const developer of result.body ){
-			expect(developer).toHaveProperty('id')
-			expect(developer).toHaveProperty('firstName')
-			expect(developer).toHaveProperty('lastName')
-			expect(developer).toHaveProperty('email')
-		}
+			expect(result.status).toBe(200)
+			expect(result.body?.length).toBeGreaterThan(0)
+
+			for (const developer of result.body) {
+				expect(developer).toHaveProperty('id')
+				expect(developer).toHaveProperty('firstName')
+				expect(developer).toHaveProperty('lastName')
+				expect(developer).toHaveProperty('email')
+				expect(developer).not.toHaveProperty('revenue')
+			}
+
+		})
+
+		it('should fetch developers with revenue when revenue=true', async () => {
+
+			const result = await request.get(`/api/developers?revenue=true`)
+
+			expect(result.status).toBe(200)
+			expect(result.body?.length).toBeGreaterThan(0)
+
+			for (const developer of result.body) {
+				expect(developer).toHaveProperty('id')
+				expect(developer).toHaveProperty('firstName')
+				expect(developer).toHaveProperty('lastName')
+				expect(developer).toHaveProperty('email')
+				expect(developer).toHaveProperty('revenue', expect.any(Number))
+			}
+
+		})
+
+		it('should fetch developers without revenue when revenue=false', async () => {
+
+			const result = await request.get(`/api/developers?revenue=false`)
+
+			expect(result.status).toBe(200)
+			expect(result.body?.length).toBeGreaterThan(0)
+
+			for (const developer of result.body) {
+				expect(developer).not.toHaveProperty('revenue')
+			}
+
+		})
 
 	})
 

@@ -7,4 +7,6 @@ export interface IDeveloper {
 
 	email: string
 
+	revenue?: number
+
 }
